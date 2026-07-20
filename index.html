@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="تمرین مهدی" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <title>برنامه تمرینی مهدی</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;--card:#ffffff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;
+      --brand:#0f766e;--brand2:#14b8a6;--brand-soft:#ccfbf1;--warn:#f59e0b;--danger:#dc2626;
+      --nav:#0f172a;--radius:18px;--shadow:0 8px 30px rgba(15,23,42,.08)
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.55;padding-bottom:88px}
+    button,input,select,textarea{font:inherit} button{cursor:pointer}
+    .app-shell{max-width:720px;margin:auto;min-height:100vh}
+    .topbar{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#0f172a,#134e4a);color:white;padding:calc(env(safe-area-inset-top) + 16px) 18px 16px;box-shadow:0 8px 25px rgba(15,23,42,.18)}
+    .topbar-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .topbar h1{font-size:19px;margin:0}.topbar p{font-size:12px;opacity:.75;margin:3px 0 0}
+    .status-pill{display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 9px;font-size:11px;white-space:nowrap}.dot{width:8px;height:8px;border-radius:50%;background:#4ade80}
+    main{padding:16px}.view{display:none}.view.active{display:block}.stack{display:grid;gap:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.card-pad{padding:16px}
+    .hero{background:linear-gradient(145deg,#0f766e,#0f172a);color:white;border:0}.hero .small{opacity:.75;font-size:12px}.hero h2{margin:4px 0 8px;font-size:25px}.hero .goal{display:flex;gap:8px;flex-wrap:wrap}.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.14);font-size:12px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 10px}.section-title h2{font-size:17px;margin:0}.section-title small{color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{padding:14px;background:white;border:1px solid var(--line);border-radius:15px}.metric .label{font-size:12px;color:var(--muted)}.metric .value{font-weight:800;font-size:20px;margin-top:2px}.metric .sub{font-size:11px;color:var(--muted)}
+    .btn{border:0;border-radius:13px;padding:11px 14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn.primary{background:var(--brand);color:#fff}.btn.secondary{background:var(--brand-soft);color:#115e59}.btn.ghost{background:#f8fafc;color:var(--ink);border:1px solid var(--line)}.btn.danger{background:#fee2e2;color:#991b1b}.btn.full{width:100%}.btn.small{padding:7px 10px;border-radius:10px;font-size:12px}
+    .today-plan{display:flex;align-items:center;gap:12px}.today-icon{width:54px;height:54px;display:grid;place-items:center;border-radius:16px;background:var(--brand-soft);font-size:27px}.today-plan h3{margin:0 0 3px;font-size:16px}.today-plan p{margin:0;color:var(--muted);font-size:12px}.today-actions{margin-top:13px;display:grid;grid-template-columns:1fr auto;gap:8px}
+    .notice{padding:12px;border-radius:13px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:12px}
+    .day-card{border-right:5px solid var(--brand)}.day-head{display:flex;align-items:center;justify-content:space-between;padding:14px 15px;border-bottom:1px solid var(--line);background:#fafafa}.day-head h3{margin:0;font-size:16px}.day-head span{font-size:12px;color:var(--muted)}
+    .exercise-list{display:grid;gap:10px;padding:12px}.exercise-card{display:grid;grid-template-columns:110px 1fr;gap:12px;border:1px solid var(--line);border-radius:15px;padding:10px;background:white}.exercise-visual{width:110px;height:82px;border-radius:11px;overflow:hidden;background:#f8fafc;border:1px solid var(--line)}.exercise-visual svg{width:100%;height:100%;display:block}.exercise-info h4{margin:0;font-size:14px}.exercise-info .en{font-size:11px;color:var(--muted);direction:ltr;text-align:right}.exercise-info .dose{display:inline-block;margin-top:4px;background:var(--brand-soft);color:#115e59;padding:3px 7px;border-radius:8px;font-size:11px;font-weight:700}.exercise-info .cues{font-size:11px;color:#475569;margin-top:5px}.exercise-info .target{font-size:10px;color:#7c3aed;margin-top:3px}
+    .workout-select{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px}.field label{font-size:12px;color:#475569}.input{width:100%;border:1px solid #cbd5e1;background:white;border-radius:12px;padding:10px 11px;color:var(--ink)}textarea.input{min-height:80px;resize:vertical}
+    .session-exercise{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}.session-exercise-head{display:flex;gap:10px;align-items:center;padding:11px;border-bottom:1px solid var(--line)}.session-exercise-head .exercise-visual{width:82px;height:62px}.session-exercise-head h4{margin:0;font-size:14px}.sets{padding:8px 10px 12px;overflow-x:auto}.set-table{width:100%;border-collapse:collapse;min-width:500px}.set-table th,.set-table td{padding:6px 4px;text-align:center;font-size:11px;border-bottom:1px solid #f1f5f9}.set-table th{color:var(--muted);font-weight:600}.set-table input,.set-table select{width:100%;min-width:65px;border:1px solid #cbd5e1;border-radius:8px;padding:7px;background:white}.set-check{width:21px!important;height:21px;accent-color:var(--brand)}
+    .history-item{padding:13px 14px;border-bottom:1px solid var(--line)}.history-item:last-child{border-bottom:0}.history-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.history-item h4{margin:0;font-size:14px}.history-item p{margin:3px 0 0;color:var(--muted);font-size:11px}.score{font-weight:800;color:var(--brand)}.history-details{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:11px}.history-item.open .history-details{display:block}.history-ex{margin:6px 0}.history-ex strong{display:block}.history-actions{display:flex;gap:7px;margin-top:10px}
+    .empty{text-align:center;padding:30px 15px;color:var(--muted)}.empty .emoji{font-size:42px;display:block;margin-bottom:7px}
+    .bottom-nav{position:fixed;z-index:30;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px max(8px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));display:grid;grid-template-columns:repeat(6,1fr);box-shadow:0 -7px 25px rgba(15,23,42,.08)}.nav-btn{border:0;background:transparent;color:#64748b;font-size:9px;padding:4px 1px}.nav-btn span{display:block;font-size:20px;line-height:1.2}.nav-btn.active{color:var(--brand);font-weight:800}
+    .calendar-modal{position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.55);display:none;align-items:end;justify-content:center}.calendar-modal.open{display:flex}.calendar-box{background:white;width:min(100%,520px);border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -12px 35px rgba(0,0,0,.18)}.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.cal-head button{border:0;background:#f1f5f9;border-radius:10px;width:38px;height:38px}.cal-title{font-weight:800}.weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.weekdays div{text-align:center;font-size:10px;color:var(--muted);padding:5px}.cal-day{border:0;background:#f8fafc;border-radius:10px;padding:8px 2px;min-height:38px}.cal-day.today{outline:2px solid var(--brand2)}.cal-day.selected{background:var(--brand);color:white}.cal-day.blank{visibility:hidden}.cal-close{margin-top:12px}
+    .chart-wrap{height:210px;position:relative}.chart-wrap canvas{width:100%;height:100%}.measure-row{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.progress-list{display:grid;gap:8px}.progress-entry{display:flex;justify-content:space-between;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px;font-size:11px}.progress-entry strong{font-size:13px}
+    .export-grid{display:grid;gap:10px}.export-card{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}.export-card h3{font-size:14px;margin:0 0 5px}.export-card p{font-size:11px;color:var(--muted);margin:0 0 10px}.file-input{display:none}
+    .toast{position:fixed;z-index:120;bottom:95px;left:50%;transform:translate(-50%,20px);background:#0f172a;color:white;border-radius:999px;padding:10px 15px;font-size:12px;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .modal{position:fixed;inset:0;z-index:90;background:rgba(15,23,42,.6);display:none;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}.modal-card{background:white;border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:15px;border-bottom:1px solid var(--line)}.modal-body{padding:15px}.close-x{border:0;background:#f1f5f9;border-radius:10px;width:36px;height:36px}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;color:var(--muted)}.legend span{display:inline-flex;align-items:center;gap:4px}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+    @media(max-width:480px){main{padding:12px}.exercise-card{grid-template-columns:96px 1fr}.exercise-visual{width:96px;height:75px}.workout-select{grid-template-columns:1fr}.bottom-nav{grid-template-columns:repeat(6,1fr)}.nav-btn{font-size:8px}.nav-btn span{font-size:19px}.hero h2{font-size:22px}}
+    @media(prefers-color-scheme:dark){:root{--bg:#020617;--card:#0f172a;--ink:#f8fafc;--muted:#94a3b8;--line:#263247;--brand-soft:#134e4a}.metric,.exercise-card,.session-exercise,.export-card,.calendar-box,.modal-card{background:#0f172a}.day-head{background:#111c31}.input,.set-table input,.set-table select{background:#111827;color:#f8fafc;border-color:#334155}.btn.ghost{background:#111827;color:#f8fafc}.exercise-visual{background:#111827}.cal-day{background:#111827;color:#f8fafc}.bottom-nav{background:rgba(15,23,42,.96)}.notice{background:#431407;border-color:#7c2d12;color:#fed7aa}}
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-row">
+      <div><h1>برنامه تمرینی مهدی</h1><p id="todayPersian">در حال بارگذاری تاریخ…</p></div>
+      <div class="status-pill"><span class="dot"></span><span>آفلاین آماده</span></div>
+    </div>
+  </header>
+  <main>
+    <section id="view-home" class="view active"><div class="stack">
+      <div class="card hero"><div class="card-pad">
+        <div class="small">برنامه ۱۲ هفته‌ای · ۳ روز باشگاه + ۲ نوبت کوتاه خانه</div>
+        <h2>هدف: بدن متناسب، عضلانی و کمر کنترل‌شده</h2>
+        <div class="goal"><span class="chip">قد ۱۷۷</span><span class="chip">وزن شروع ۶۳.۵</span><span class="chip">هدف سه‌ماهه ۶۶ تا ۶۷.۵</span><span class="chip">سن ۴۰</span></div>
+      </div></div>
+      <div>
+        <div class="section-title"><h2>برنامه امروز</h2><small id="todayWeekday"></small></div>
+        <div class="card"><div class="card-pad" id="todayPlan"></div></div>
+      </div>
+      <div class="grid2">
+        <div class="metric"><div class="label">جلسه‌های ثبت‌شده</div><div class="value" id="metricSessions">۰</div><div class="sub">از شروع برنامه</div></div>
+        <div class="metric"><div class="label">آخرین وزن</div><div class="value" id="metricWeight">۶۳.۵</div><div class="sub">کیلوگرم</div></div>
+        <div class="metric"><div class="label">تداوم ۱۴ روز اخیر</div><div class="value" id="metricAdherence">۰٪</div><div class="sub">جلسه‌های پیشنهادی</div></div>
+        <div class="metric"><div class="label">آخرین تمرین</div><div class="value" style="font-size:14px" id="metricLast">ثبت نشده</div><div class="sub" id="metricLastDate">—</div></div>
+      </div>
+      <div class="notice">دو هفته اول بعد از وقفه، از هر حرکت ۲ ست بزن و حدود ۳ تکرار در ذخیره نگه دار. از هفته سوم ست‌های کامل برنامه را اجرا کن.</div>
+    </div></section>
+
+    <section id="view-plan" class="view"><div class="stack">
+      <div class="section-title"><h2>برنامه هفتگی</h2><small>تصویر، نام فارسی و انگلیسی</small></div>
+      <div id="planList"></div>
+    </div></section>
+
+    <section id="view-log" class="view"><div class="stack">
+      <div class="section-title"><h2>ثبت تمرین</h2><small>وزنه، تکرار و کیفیت اجرا</small></div>
+      <div class="card"><div class="card-pad">
+        <div class="workout-select">
+          <div class="field"><label>نوع جلسه</label><select id="logWorkout" class="input"></select></div>
+          <div class="field"><label>تاریخ تمرین</label><button id="logDateBtn" class="input" style="text-align:right;background:white">انتخاب تاریخ</button><input id="logDate" type="hidden"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button class="btn secondary" id="buildSession">ساخت فرم جلسه</button><button class="btn ghost" id="copyLast">کپی وزنه‌های جلسه قبل</button></div>
+      </div></div>
+      <div id="sessionForm"></div>
+    </div></section>
+
+    <section id="view-history" class="view"><div class="stack">
+      <div class="section-title"><h2>سوابق تمرین</h2><small id="historyCount">۰ جلسه</small></div>
+      <div class="card" id="historyList"></div>
+    </div></section>
+
+    <section id="view-progress" class="view"><div class="stack">
+      <div class="section-title"><h2>پیشرفت بدن</h2><small>وزن و اندازه‌ها</small></div>
+      <div class="card"><div class="card-pad">
+        <div class="field"><label>تاریخ اندازه‌گیری</label><button id="measureDateBtn" class="input" style="text-align:right;background:white">انتخاب تاریخ</button><input id="measureDate" type="hidden"></div>
+        <div class="measure-row" style="margin-top:9px">
+          <div class="field"><label>وزن (کیلو)</label><input id="mWeight" class="input" type="number" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label>دور کمر (سانت)</label><input id="mWaist" class="input" type="number" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label>دور سینه</label><input id="mChest" class="input" type="number" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label>دور بازوی منقبض</label><input id="mArm" class="input" type="number" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label>دور ران</label><input id="mThigh" class="input" type="number" step="0.1" inputmode="decimal"></div>
+          <div class="field"><label>دور باسن</label><input id="mHip" class="input" type="number" step="0.1" inputmode="decimal"></div>
+        </div>
+        <div class="field" style="margin-top:9px"><label>یادداشت</label><textarea id="mNote" class="input" placeholder="مثلاً صبح ناشتا، کیفیت خواب، وضعیت شکم…"></textarea></div>
+        <button id="saveMeasure" class="btn primary full" style="margin-top:10px">ثبت اندازه‌ها</button>
+      </div></div>
+      <div class="card"><div class="card-pad"><div class="section-title"><h2>نمودار وزن</h2><small>روند ثبت‌شده</small></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div></div></div>
+      <div class="card"><div class="card-pad"><div class="section-title"><h2>آخرین اندازه‌ها</h2><small id="measureCount">۰ مورد</small></div><div id="measureList" class="progress-list"></div></div></div>
+    </div></section>
+
+    <section id="view-export" class="view"><div class="stack">
+      <div class="section-title"><h2>خروجی و پشتیبان</h2><small>برای ارسال و بررسی</small></div>
+      <div class="export-grid">
+        <div class="export-card"><h3>گزارش مناسب برای ارسال به ChatGPT</h3><p>خلاصه تمرین‌ها، وزنه‌ها، روند تکرارها، پایبندی و اندازه‌های بدن را در یک فایل متنی قابل‌خواندن می‌سازد.</p><button id="exportReport" class="btn primary full">دانلود گزارش متنی</button><button id="copyReport" class="btn ghost full" style="margin-top:7px">کپی گزارش</button></div>
+        <div class="export-card"><h3>فایل CSV تمرین‌ها</h3><p>هر ست در یک ردیف؛ مناسب Excel و تحلیل دقیق‌تر.</p><button id="exportCsv" class="btn secondary full">دانلود CSV</button></div>
+        <div class="export-card"><h3>پشتیبان کامل JSON</h3><p>تمام تمرین‌ها، اندازه‌ها و تنظیمات؛ برای انتقال به گوشی دیگر یا بازیابی.</p><button id="exportJson" class="btn secondary full">دانلود پشتیبان</button></div>
+        <div class="export-card"><h3>بازیابی پشتیبان</h3><p>یک فایل JSON که قبلاً از همین برنامه گرفته‌ای وارد کن.</p><label class="btn ghost full" for="importJson">انتخاب فایل پشتیبان</label><input class="file-input" id="importJson" type="file" accept="application/json,.json"></div>
+        <div class="export-card"><h3>پاک‌کردن اطلاعات</h3><p>همه سوابق و اندازه‌ها را از این مرورگر حذف می‌کند. قبلش پشتیبان بگیر.</p><button id="clearData" class="btn danger full">حذف همه اطلاعات</button></div>
+      </div>
+    </div></section>
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-view="home"><span>⌂</span>خانه</button>
+  <button class="nav-btn" data-view="plan"><span>▦</span>برنامه</button>
+  <button class="nav-btn" data-view="log"><span>＋</span>ثبت</button>
+  <button class="nav-btn" data-view="history"><span>◷</span>سوابق</button>
+  <button class="nav-btn" data-view="progress"><span>↗</span>پیشرفت</button>
+  <button class="nav-btn" data-view="export"><span>⇩</span>خروجی</button>
+</nav>
+
+<div class="calendar-modal" id="calendarModal"><div class="calendar-box">
+  <div class="cal-head"><button id="calNext">‹</button><div class="cal-title" id="calTitle"></div><button id="calPrev">›</button></div>
+  <div class="weekdays"><div>ش</div><div>ی</div><div>د</div><div>س</div><div>چ</div><div>پ</div><div>ج</div></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <button class="btn ghost full cal-close" id="calClose">بستن</button>
+</div></div>
+
+<div class="modal" id="exerciseModal"><div class="modal-card"><div class="modal-head"><strong id="modalTitle"></strong><button class="close-x" id="modalClose">×</button></div><div class="modal-body" id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+const faDigits='۰۱۲۳۴۵۶۷۸۹';
+const toFa=n=>String(n).replace(/\d/g,d=>faDigits[d]);
+const toEn=s=>String(s).replace(/[۰-۹]/g,d=>faDigits.indexOf(d));
+const isoDate=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)};
+const todayISO=()=>isoDate(new Date());
+const persianDate=iso=>new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date(iso+'T12:00:00'));
+const shortPersian=iso=>new Intl.DateTimeFormat('fa-IR-u-ca-persian',{year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(iso+'T12:00:00'));
+const id=()=>crypto.randomUUID?crypto.randomUUID():'id-'+Date.now()+'-'+Math.random().toString(16).slice(2);
+const STORAGE='mehdi-fitness-v1';
+const defaultData={version:1,profile:{name:'مهدی',age:40,height:177,startWeight:63.5,goalWeight:'66 تا 67.5'},sessions:[],measurements:[{id:'baseline',date:todayISO(),weight:63.5,waist:'',chest:'',arm:'',thigh:'',hip:'',note:'وزن شروع برنامه'}]};
+let data=loadData();
+function loadData(){try{return {...structuredClone(defaultData),...JSON.parse(localStorage.getItem(STORAGE)||'{}')}}catch(e){return structuredClone(defaultData)}}
+function saveData(){localStorage.setItem(STORAGE,JSON.stringify(data));refreshAll()}
+
+const workouts=[
+ {id:'A',day:'شنبه',title:'باشگاه A — بالاسینه و چهارسر',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'incline-db',fa:'پرس بالاسینه دمبل',en:'Incline Dumbbell Press',sets:4,reps:'6–10',target:'بالاسینه، جلوی سرشانه، پشت‌بازو',visual:'inclinePress',cues:'زاویه نیمکت ۲۰ تا ۳۰ درجه؛ آرنج‌ها بیش‌ازحد باز نشوند.'},
+  {id:'chest-row',fa:'قایقی سینه‌تکیه',en:'Chest-Supported Row',sets:3,reps:'8–12',target:'پشت میانی، لت، پشت سرشانه',visual:'row',cues:'سینه روی پد ثابت؛ در انتها کتف‌ها را یک ثانیه جمع کن.'},
+  {id:'leg-press',fa:'پرس پا',en:'Leg Press',sets:3,reps:'8–12',target:'چهارسر، باسن',visual:'legPress',cues:'زانو در مسیر پنجه؛ لگن از پشتی جدا نشود.'},
+  {id:'rdl',fa:'ددلیفت رومانیایی',en:'Romanian Deadlift',sets:3,reps:'8–10',target:'پشت ران، باسن، فیله',visual:'hinge',cues:'لگن عقب، کمر خنثی و کشش واضح پشت ران.'},
+  {id:'db-lateral',fa:'نشر جانب دمبل',en:'Dumbbell Lateral Raise',sets:3,reps:'12–20',target:'سرشانه کناری',visual:'lateral',cues:'دست‌ها کمی جلوتر؛ بدون تاب‌دادن کمر.'},
+  {id:'rope-pushdown',fa:'پشت‌بازو سیم‌کش طناب',en:'Rope Triceps Pushdown',sets:3,reps:'10–15',target:'پشت‌بازو',visual:'pushdown',cues:'آرنج ثابت کنار بدن؛ پایین حرکت طناب را باز کن.'},
+  {id:'standing-calf',fa:'ساق ایستاده',en:'Standing Calf Raise',sets:3,reps:'12–20',target:'ساق',visual:'calf',cues:'پایین کشش کامل و بالا یک ثانیه مکث.'}
+ ]},
+ {id:'H1',day:'یکشنبه',title:'خانه — شکم و کنترل لگن',icon:'🧘',kind:'خانه',exercises:[
+  {id:'dead-bug',fa:'ددباگ',en:'Dead Bug',sets:3,reps:'8–12 هر سمت',target:'عضلات عمقی شکم',visual:'deadBug',cues:'کمر را روی زمین نگه دار؛ حرکت آهسته و کنترل‌شده.'},
+  {id:'reverse-crunch',fa:'ریورس کرانچ',en:'Reverse Crunch',sets:3,reps:'10–15',target:'شکم، کنترل لگن',visual:'reverseCrunch',cues:'لگن را از زمین جمع کن؛ فقط پاها را تاب نده.'},
+  {id:'side-plank',fa:'ساید پلانک',en:'Side Plank',sets:2,reps:'25–40 ثانیه هر سمت',target:'پهلو و ثبات مرکزی',visual:'sidePlank',cues:'بدن خط صاف؛ لگن افت نکند.'},
+  {id:'glute-bridge',fa:'پل باسن',en:'Glute Bridge',sets:2,reps:'15',target:'باسن و لگن',visual:'bridge',cues:'بالا باسن را سفت کن؛ کمر را گود نکن.'}
+ ]},
+ {id:'B',day:'دوشنبه',title:'باشگاه B — پشت، سرشانه و باسن',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'lat-pulldown',fa:'لت سیم‌کش از جلو',en:'Lat Pulldown',sets:4,reps:'8–12',target:'لت و عرض پشت',visual:'pulldown',cues:'میله به بالای سینه؛ شانه‌ها پایین و بدن تقریباً ثابت.'},
+  {id:'db-shoulder',fa:'پرس سرشانه دمبل نشسته',en:'Seated Dumbbell Shoulder Press',sets:3,reps:'8–10',target:'سرشانه و پشت‌بازو',visual:'shoulderPress',cues:'کمر روی پشتی؛ آرنج کمی جلوتر از خط بدن.'},
+  {id:'bulgarian',fa:'اسکوات بلغاری',en:'Bulgarian Split Squat',sets:3,reps:'8–12 هر پا',target:'ران، باسن و تعادل',visual:'splitSquat',cues:'وزن روی پای جلو؛ زانو در مسیر پنجه.'},
+  {id:'hip-thrust',fa:'هیپ تراست',en:'Hip Thrust',sets:3,reps:'8–12',target:'باسن و پشت ران',visual:'hipThrust',cues:'چانه کمی داخل؛ بالای حرکت لگن کامل باز شود.'},
+  {id:'reverse-pec',fa:'فلای معکوس دستگاه',en:'Reverse Pec Deck',sets:3,reps:'12–20',target:'پشت سرشانه و پشت میانی',visual:'reverseFly',cues:'شانه‌ها پایین؛ حرکت از بازشدن بازوها و کتف‌ها.'},
+  {id:'ez-curl',fa:'جلو بازو هالتر EZ',en:'EZ-Bar Curl',sets:3,reps:'8–12',target:'جلو بازو',visual:'curl',cues:'آرنج ثابت؛ بدن تاب نخورد.'},
+  {id:'seated-calf',fa:'ساق نشسته',en:'Seated Calf Raise',sets:3,reps:'12–20',target:'ساق',visual:'calf',cues:'دامنه کامل و کنترل برگشت.'}
+ ]},
+ {id:'H2',day:'چهارشنبه',title:'خانه — شنا و شکم',icon:'🤸',kind:'خانه',exercises:[
+  {id:'push-up',fa:'شنا روی زمین',en:'Push-up',sets:3,reps:'8–20',target:'سینه، پشت‌بازو و سرشانه',visual:'pushup',cues:'بدن یک خط؛ دو تکرار قبل از خراب‌شدن فرم توقف کن.'},
+  {id:'scap-pushup',fa:'شنا کتف',en:'Scapular Push-up',sets:2,reps:'12–15',target:'ثبات کتف و شانه',visual:'scapPushup',cues:'آرنج صاف؛ فقط کتف‌ها جمع و باز شوند.'},
+  {id:'reverse-crunch2',fa:'ریورس کرانچ',en:'Reverse Crunch',sets:3,reps:'12–15',target:'شکم و لگن',visual:'reverseCrunch',cues:'حرکت آهسته و بدون تاب.'},
+  {id:'plank',fa:'پلانک',en:'Plank',sets:3,reps:'25–45 ثانیه',target:'شکم و ثبات مرکزی',visual:'plank',cues:'باسن نه بالا نه افتاده؛ شکم و باسن منقبض.'}
+ ]},
+ {id:'C',day:'پنجشنبه',title:'باشگاه C — بدن کامل و تکمیل نقاط ضعف',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'flat-db',fa:'پرس سینه دمبل تخت',en:'Flat Dumbbell Press',sets:3,reps:'8–12',target:'سینه، پشت‌بازو و سرشانه',visual:'flatPress',cues:'کتف‌ها عقب و پایین؛ دمبل‌ها با کنترل پایین بیایند.'},
+  {id:'cable-row',fa:'قایقی سیم‌کش نشسته',en:'Seated Cable Row',sets:3,reps:'8–12',target:'پشت میانی و لت',visual:'cableRow',cues:'دستگیره به پایین شکم؛ قفسه سینه بالا.'},
+  {id:'hack-squat',fa:'هک اسکوات',en:'Hack Squat',sets:3,reps:'8–12',target:'چهارسر و باسن',visual:'squat',cues:'کف پا کامل روی صفحه؛ زانو در مسیر پنجه.'},
+  {id:'leg-curl',fa:'پشت پا دستگاه',en:'Leg Curl',sets:3,reps:'10–15',target:'پشت ران',visual:'legCurl',cues:'بالا یک ثانیه فشار؛ برگشت آرام.'},
+  {id:'cable-lateral',fa:'نشر جانب سیم‌کش',en:'Cable Lateral Raise',sets:3,reps:'12–20',target:'سرشانه کناری',visual:'lateral',cues:'کیفیت حرکت مهم‌تر از سنگینی است.'},
+  {id:'overhead-tri',fa:'پشت‌بازو طناب بالای سر',en:'Overhead Rope Triceps Extension',sets:3,reps:'10–15',target:'سر بلند پشت‌بازو',visual:'overheadTri',cues:'آرنج‌ها رو به جلو و ثابت؛ کشش کامل پشت‌بازو.'},
+  {id:'hammer-curl',fa:'جلو بازو چکشی',en:'Hammer Curl',sets:3,reps:'10–15',target:'جلو بازو، براکیالیس و ساعد',visual:'hammerCurl',cues:'کف دست‌ها روبه‌هم؛ شانه جلو نیاید.'}
+ ]}
+];
+const workoutById=x=>workouts.find(w=>w.id===x);
+const exerciseById=x=>workouts.flatMap(w=>w.exercises).find(e=>e.id===x);
+
+function svgVisual(type){
+ const S='#0f172a',G='#14b8a6',M='#94a3b8',skin='#f2c4a5';
+ const head=(x,y)=>`<circle cx="${x}" cy="${y}" r="5" fill="${skin}" stroke="${S}" stroke-width="2"/>`;
+ const line=(x1,y1,x2,y2,c=S,w=3)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+ const arrow=(x1,y1,x2,y2)=>`${line(x1,y1,x2,y2,G,2)}<path d="M${x2} ${y2} l-5 -3 l1 6z" fill="${G}"/>`;
+ let a='',b='';
+ switch(type){
+  case'inclinePress':a=head(26,25)+line(25,31,36,47)+line(36,47,55,54)+line(35,40,28,54)+line(28,54,20,45)+line(55,54,70,54,M,5)+line(22,44,14,35)+line(14,35,18,25)+line(48,48,48,29)+line(44,29,52,29,M,4);b=head(92,25)+line(91,31,102,47)+line(102,47,120,54)+line(101,40,94,47)+line(94,47,94,27)+line(120,54,136,54,M,5)+line(88,44,80,37)+line(80,37,80,25)+line(76,25,84,25,M,4)+arrow(52,30,80,25);break;
+  case'row':a=head(24,21)+line(25,27,42,39)+line(42,39,55,60)+line(39,37,27,52)+line(27,52,17,57)+line(55,60,65,60,M,5)+line(35,35,50,35)+line(50,35,61,28);b=head(96,21)+line(97,27,112,39)+line(112,39,125,60)+line(109,37,102,49)+line(102,49,91,42)+line(125,60,137,60,M,5)+line(106,35,119,36)+line(119,36,126,30)+arrow(63,28,91,42);break;
+  case'legPress':a=head(25,29)+line(26,35,42,48)+line(42,48,54,65)+line(40,46,57,46)+line(57,46,67,35)+line(66,25,66,68,M,5);b=head(95,29)+line(96,35,112,48)+line(112,48,125,65)+line(110,46,129,39)+line(129,39,137,28)+line(137,18,137,61,M,5)+arrow(67,35,137,28);break;
+  case'hinge':a=head(27,19)+line(27,25,27,49)+line(27,49,20,70)+line(27,49,35,70)+line(27,35,17,52)+line(17,52,15,65)+line(11,65,39,65,M,4);b=head(96,27)+line(92,31,78,46)+line(78,46,84,68)+line(84,68,76,72)+line(84,68,94,72)+line(83,43,73,55)+line(73,55,74,66)+line(68,66,96,66,M,4)+arrow(55,30,78,46);break;
+  case'lateral':a=head(25,18)+line(25,24,25,48)+line(25,48,17,70)+line(25,48,34,70)+line(25,30,16,47)+line(25,30,34,47);b=head(96,18)+line(96,24,96,48)+line(96,48,88,70)+line(96,48,105,70)+line(96,30,75,31)+line(96,30,117,31)+arrow(34,47,75,31);break;
+  case'pushdown':a=line(18,8,18,68,M,4)+line(18,10,35,10,M,4)+head(46,19)+line(46,25,46,48)+line(46,48,38,70)+line(46,48,55,70)+line(46,31,35,35)+line(35,35,35,50)+line(35,10,35,35,M,2);b=line(80,8,80,68,M,4)+line(80,10,97,10,M,4)+head(108,19)+line(108,25,108,48)+line(108,48,100,70)+line(108,48,117,70)+line(108,31,97,35)+line(97,35,97,58)+line(97,10,97,35,M,2)+arrow(63,48,97,58);break;
+  case'calf':a=head(29,17)+line(29,23,29,48)+line(29,48,23,68)+line(29,48,35,68)+line(17,69,42,69,M,5);b=head(96,13)+line(96,19,96,44)+line(96,44,90,64)+line(96,44,102,64)+line(84,69,109,69,M,5)+arrow(61,55,96,44);break;
+  case'deadBug':a=head(24,53)+line(29,53,55,53)+line(42,53,34,33)+line(42,53,58,38)+line(55,53,66,35)+line(55,53,70,66);b=head(88,53)+line(93,53,119,53)+line(106,53,96,34)+line(106,53,121,36)+line(119,53,132,35)+line(119,53,136,66)+arrow(70,66,96,34);break;
+  case'reverseCrunch':a=head(22,55)+line(27,55,55,55)+line(55,55,68,43)+line(68,43,57,31);b=head(90,58)+line(95,58,119,52)+line(119,52,130,36)+line(130,36,120,25)+arrow(68,43,119,52);break;
+  case'sidePlank':a=head(20,43)+line(26,44,58,52)+line(58,52,76,58)+line(30,45,25,60)+line(25,60,40,60);b=head(89,33)+line(95,34,126,42)+line(126,42,141,48)+line(100,36,96,57)+line(96,57,111,57)+arrow(58,52,126,42);break;
+  case'bridge':a=head(20,54)+line(25,54,56,54)+line(56,54,70,68)+line(56,54,70,43);b=head(88,58)+line(93,58,121,42)+line(121,42,137,58)+line(121,42,135,28)+arrow(56,54,121,42);break;
+  case'pulldown':a=line(16,9,16,70,M,4)+line(16,10,47,10,M,4)+head(35,29)+line(35,35,35,56)+line(35,56,28,70)+line(35,56,42,70)+line(35,38,25,23)+line(35,38,45,23)+line(24,18,46,18,M,3);b=line(80,9,80,70,M,4)+line(80,10,111,10,M,4)+head(99,29)+line(99,35,99,56)+line(99,56,92,70)+line(99,56,106,70)+line(99,38,89,43)+line(99,38,109,43)+line(88,43,110,43,M,3)+arrow(47,18,110,43);break;
+  case'shoulderPress':a=head(27,20)+line(27,26,27,48)+line(27,48,19,70)+line(27,48,35,70)+line(27,32,18,41)+line(18,41,18,28)+line(27,32,36,41)+line(36,41,36,28);b=head(96,20)+line(96,26,96,48)+line(96,48,88,70)+line(96,48,104,70)+line(96,32,86,20)+line(86,20,86,9)+line(96,32,106,20)+line(106,20,106,9)+arrow(51,30,86,9);break;
+  case'splitSquat':a=head(28,17)+line(28,23,28,45)+line(28,45,18,67)+line(28,45,44,56)+line(44,56,57,56)+line(57,56,57,50,M,4);b=head(97,27)+line(97,33,97,50)+line(97,50,84,66)+line(97,50,113,58)+line(113,58,127,58)+line(127,58,127,52,M,4)+arrow(57,44,97,50);break;
+  case'hipThrust':a=head(19,45)+line(24,45,52,52)+line(52,52,70,68)+line(24,45,18,58)+line(18,58,5,58,M,6);b=head(88,45)+line(93,45,119,35)+line(119,35,137,58)+line(93,45,87,58)+line(87,58,75,58,M,6)+arrow(52,52,119,35);break;
+  case'reverseFly':a=head(27,18)+line(27,24,27,48)+line(27,48,19,70)+line(27,48,35,70)+line(27,31,18,43)+line(27,31,36,43);b=head(96,18)+line(96,24,96,48)+line(96,48,88,70)+line(96,48,104,70)+line(96,31,75,39)+line(96,31,117,39)+arrow(36,43,75,39);break;
+  case'curl':case'hammerCurl':a=head(27,18)+line(27,24,27,48)+line(27,48,19,70)+line(27,48,35,70)+line(27,31,18,51)+line(27,31,36,51);b=head(96,18)+line(96,24,96,48)+line(96,48,88,70)+line(96,48,104,70)+line(96,31,86,42)+line(86,42,86,27)+line(96,31,106,42)+line(106,42,106,27)+arrow(51,50,86,27);break;
+  case'flatPress':a=head(25,46)+line(30,46,60,46)+line(42,46,32,34)+line(32,34,32,23)+line(42,46,52,34)+line(52,34,52,23)+line(18,55,70,55,M,6);b=head(90,46)+line(95,46,125,46)+line(107,46,98,30)+line(98,30,98,17)+line(107,46,116,30)+line(116,30,116,17)+line(83,55,135,55,M,6)+arrow(52,23,98,17);break;
+  case'cableRow':a=head(24,25)+line(24,31,24,50)+line(24,50,16,69)+line(24,50,35,69)+line(24,35,39,35)+line(39,35,54,35)+line(60,12,60,70,M,4);b=head(92,25)+line(92,31,92,50)+line(92,50,84,69)+line(92,50,103,69)+line(92,35,81,39)+line(81,39,72,39)+line(70,12,70,70,M,4)+arrow(54,35,72,39);break;
+  case'squat':a=head(27,17)+line(27,23,27,48)+line(27,48,19,70)+line(27,48,35,70);b=head(96,28)+line(96,34,96,49)+line(96,49,82,61)+line(96,49,112,61)+line(82,61,78,71)+line(112,61,116,71)+arrow(55,30,96,49);break;
+  case'legCurl':a=head(19,49)+line(24,49,56,49)+line(56,49,73,49)+line(73,49,85,49)+line(14,58,63,58,M,6);b=head(91,49)+line(96,49,124,49)+line(124,49,136,35)+line(136,35,126,25)+line(86,58,132,58,M,6)+arrow(73,49,136,35);break;
+  case'overheadTri':a=head(27,18)+line(27,24,27,48)+line(27,48,19,70)+line(27,48,35,70)+line(27,31,19,18)+line(19,18,25,7)+line(27,31,35,18)+line(35,18,29,7);b=head(96,18)+line(96,24,96,48)+line(96,48,88,70)+line(96,48,104,70)+line(96,31,88,17)+line(88,17,88,5)+line(96,31,104,17)+line(104,17,104,5)+arrow(51,10,88,5);break;
+  case'pushup':case'scapPushup':case'plank':a=head(18,44)+line(24,44,60,49)+line(60,49,79,55)+line(32,45,27,58)+line(27,58,44,58);b=head(90,40)+line(96,40,130,45)+line(130,45,145,51)+line(104,41,100,56)+line(100,56,117,56)+arrow(60,49,130,45);break;
+  default:a=head(27,18)+line(27,24,27,48)+line(27,48,19,70)+line(27,48,35,70);b=head(96,18)+line(96,24,96,48)+line(96,48,88,70)+line(96,48,104,70)+arrow(48,40,75,40);
+ }
+ return `<svg viewBox="0 0 155 80" xmlns="http://www.w3.org/2000/svg"><rect width="155" height="80" rx="10" fill="#f8fafc"/><line x1="77.5" y1="7" x2="77.5" y2="73" stroke="#e2e8f0"/><text x="20" y="76" font-size="7" fill="#64748b">شروع</text><text x="92" y="76" font-size="7" fill="#64748b">پایان</text>${a}${b}</svg>`;
+}
+function exerciseCard(e,modal=true){return `<article class="exercise-card" ${modal?`onclick="showExercise('${e.id}')"`:''}><div class="exercise-visual">${svgVisual(e.visual)}</div><div class="exercise-info"><h4>${e.fa}</h4><div class="en">${e.en}</div><span class="dose">${toFa(e.sets)} ست × ${toFa(e.reps)}</span><div class="target">هدف: ${e.target}</div><div class="cues">${e.cues}</div></div></article>`}
+function renderPlan(){document.getElementById('planList').innerHTML=workouts.map(w=>`<div class="card day-card" style="margin-bottom:13px"><div class="day-head"><div><h3>${w.icon} ${w.day}</h3><span>${w.title}</span></div><button class="btn small primary" onclick="quickStart('${w.id}')">شروع</button></div><div class="exercise-list">${w.exercises.map(e=>exerciseCard(e)).join('')}</div></div>`).join('')}
+function showExercise(exId){const e=exerciseById(exId);document.getElementById('modalTitle').textContent=e.fa;document.getElementById('modalBody').innerHTML=`<div class="exercise-visual" style="width:100%;height:auto;aspect-ratio:155/80;margin-bottom:12px">${svgVisual(e.visual)}</div><h3 style="margin:0">${e.fa}</h3><div style="direction:ltr;text-align:right;color:var(--muted)">${e.en}</div><p><strong>برنامه:</strong> ${toFa(e.sets)} ست × ${toFa(e.reps)}</p><p><strong>عضلات هدف:</strong> ${e.target}</p><p><strong>نکته اجرا:</strong> ${e.cues}</p><div class="notice">این تصاویر شماتیک‌اند و برای یادآوری جهت حرکت ساخته شده‌اند؛ کیفیت فرم را با کنترل دامنه و نکات نوشته‌شده بسنج.</div>`;document.getElementById('exerciseModal').classList.add('open')}
+
+const dayMap={6:'A',0:'H1',1:'B',3:'H2',4:'C'};
+function todayWorkout(){return workoutById(dayMap[new Date().getDay()])}
+function renderHome(){
+ const w=todayWorkout(),el=document.getElementById('todayPlan');
+ if(w){el.innerHTML=`<div class="today-plan"><div class="today-icon">${w.icon}</div><div><h3>${w.title}</h3><p>${toFa(w.exercises.length)} حرکت · ${w.kind}</p></div></div><div class="today-actions"><button class="btn primary" onclick="quickStart('${w.id}')">ثبت تمرین امروز</button><button class="btn ghost" onclick="goView('plan')">جزئیات</button></div>`}
+ else{el.innerHTML=`<div class="today-plan"><div class="today-icon">🚶</div><div><h3>استراحت یا پیاده‌روی آرام</h3><p>ریکاوری، خواب و تغذیه بخشی از برنامه هستند.</p></div></div><div class="today-actions"><button class="btn secondary" onclick="goView('progress')">ثبت وزن و اندازه</button><button class="btn ghost" onclick="goView('plan')">برنامه هفته</button></div>`}
+ document.getElementById('metricSessions').textContent=toFa(data.sessions.length);
+ const latestM=[...data.measurements].sort((a,b)=>b.date.localeCompare(a.date))[0];document.getElementById('metricWeight').textContent=toFa(latestM?.weight||63.5);
+ const last=[...data.sessions].sort((a,b)=>b.date.localeCompare(a.date))[0];document.getElementById('metricLast').textContent=last?workoutById(last.workoutId)?.title.split('—')[0].trim():'ثبت نشده';document.getElementById('metricLastDate').textContent=last?shortPersian(last.date):'—';
+ document.getElementById('metricAdherence').textContent=toFa(calcAdherence())+'٪';
+}
+function calcAdherence(){let expected=0,done=0;const now=new Date();for(let i=0;i<14;i++){const d=new Date(now);d.setDate(now.getDate()-i);if(dayMap[d.getDay()]){expected++;if(data.sessions.some(s=>s.date===isoDate(d)&&s.workoutId===dayMap[d.getDay()]))done++}}return expected?Math.round(done/expected*100):0}
+
+function populateWorkoutSelect(){const sel=document.getElementById('logWorkout');sel.innerHTML=workouts.map(w=>`<option value="${w.id}">${w.day} — ${w.title}</option>`).join('')}
+let currentDraft=null;
+function buildSession(prefill){const wid=document.getElementById('logWorkout').value,date=document.getElementById('logDate').value||todayISO(),w=workoutById(wid);currentDraft={id:id(),workoutId:wid,date,startedAt:new Date().toISOString(),exercises:w.exercises.map(e=>({exerciseId:e.id,sets:Array.from({length:e.sets},(_,i)=>({set:i+1,weight:'',reps:'',rir:'2',done:false}))})),energy:'3',pain:'',note:''};if(prefill){const prev=[...data.sessions].filter(s=>s.workoutId===wid).sort((a,b)=>b.date.localeCompare(a.date))[0];if(prev)currentDraft.exercises.forEach(ex=>{const p=prev.exercises.find(x=>x.exerciseId===ex.exerciseId);if(p)ex.sets.forEach((st,i)=>{st.weight=p.sets[i]?.weight||'';st.reps=p.sets[i]?.reps||''})})}renderSessionForm()}
+function renderSessionForm(){const box=document.getElementById('sessionForm');if(!currentDraft){box.innerHTML='<div class="empty"><span class="emoji">📝</span>نوع جلسه و تاریخ را انتخاب کن و «ساخت فرم جلسه» را بزن.</div>';return}const w=workoutById(currentDraft.workoutId);box.innerHTML=`<div class="stack"><div class="card"><div class="card-pad"><strong>${w.title}</strong><div style="font-size:11px;color:var(--muted)">${persianDate(currentDraft.date)}</div></div></div>${currentDraft.exercises.map((x,xi)=>{const e=exerciseById(x.exerciseId);return `<div class="session-exercise"><div class="session-exercise-head"><div class="exercise-visual">${svgVisual(e.visual)}</div><div><h4>${e.fa}</h4><div style="font-size:10px;color:var(--muted);direction:ltr;text-align:right">${e.en}</div><div style="font-size:10px;color:var(--brand)">${toFa(e.sets)} × ${toFa(e.reps)}</div></div></div><div class="sets"><table class="set-table"><thead><tr><th>ست</th><th>وزنه kg</th><th>تکرار/ثانیه</th><th>ذخیره</th><th>انجام</th></tr></thead><tbody>${x.sets.map((s,si)=>`<tr><td>${toFa(si+1)}</td><td><input type="number" step="0.5" inputmode="decimal" value="${s.weight}" onchange="updateSet(${xi},${si},'weight',this.value)"></td><td><input type="text" inputmode="numeric" value="${s.reps}" onchange="updateSet(${xi},${si},'reps',this.value)"></td><td><select onchange="updateSet(${xi},${si},'rir',this.value)"><option value="4" ${s.rir==='4'?'selected':''}>۴+ راحت</option><option value="3" ${s.rir==='3'?'selected':''}>۳</option><option value="2" ${s.rir==='2'?'selected':''}>۲ مناسب</option><option value="1" ${s.rir==='1'?'selected':''}>۱ سخت</option><option value="0" ${s.rir==='0'?'selected':''}>۰ ناتوانی</option></select></td><td><input class="set-check" type="checkbox" ${s.done?'checked':''} onchange="updateSet(${xi},${si},'done',this.checked)"></td></tr>`).join('')}</tbody></table></div></div>`}).join('')}<div class="card"><div class="card-pad"><div class="field"><label>انرژی جلسه از ۱ تا ۵</label><select class="input" onchange="currentDraft.energy=this.value"><option value="1">۱ — خیلی کم</option><option value="2">۲ — کم</option><option value="3" selected>۳ — معمولی</option><option value="4">۴ — خوب</option><option value="5">۵ — عالی</option></select></div><div class="field" style="margin-top:9px"><label>درد یا ناراحتی</label><input class="input" placeholder="مثلاً شانه راست، زانوی چپ…" onchange="currentDraft.pain=this.value"></div><div class="field" style="margin-top:9px"><label>یادداشت جلسه</label><textarea class="input" placeholder="کیفیت اجرا، خواب، حس عضله، نکته جلسه بعد…" onchange="currentDraft.note=this.value"></textarea></div><button class="btn primary full" style="margin-top:11px" onclick="saveSession()">ذخیره و پایان جلسه</button></div></div></div>`}
+function updateSet(xi,si,k,v){currentDraft.exercises[xi].sets[si][k]=v}
+function saveSession(){const done=currentDraft.exercises.flatMap(x=>x.sets).filter(s=>s.done).length,total=currentDraft.exercises.flatMap(x=>x.sets).length;if(!done&&!confirm('هیچ ستی تیک نخورده است. جلسه را باز هم ذخیره کنم؟'))return;currentDraft.completedSets=done;currentDraft.totalSets=total;currentDraft.completedAt=new Date().toISOString();data.sessions.push(currentDraft);currentDraft=null;saveData();toast('جلسه تمرین ذخیره شد');goView('history')}
+function quickStart(wid){document.getElementById('logWorkout').value=wid;setDateField('log',todayISO());goView('log');buildSession(false)}
+
+function renderHistory(){const list=document.getElementById('historyList'),sessions=[...data.sessions].sort((a,b)=>(b.date+b.startedAt).localeCompare(a.date+a.startedAt));document.getElementById('historyCount').textContent=toFa(sessions.length)+' جلسه';if(!sessions.length){list.innerHTML='<div class="empty"><span class="emoji">📭</span>هنوز جلسه‌ای ثبت نشده است.</div>';return}list.innerHTML=sessions.map(s=>{const w=workoutById(s.workoutId),pct=Math.round((s.completedSets||0)/(s.totalSets||1)*100);return `<div class="history-item" id="hist-${s.id}"><div class="history-top" onclick="document.getElementById('hist-${s.id}').classList.toggle('open')"><div><h4>${w?.title||s.workoutId}</h4><p>${persianDate(s.date)} · انرژی ${toFa(s.energy||'—')}/۵</p></div><div class="score">${toFa(pct)}٪</div></div><div class="history-details">${s.exercises.map(x=>{const e=exerciseById(x.exerciseId),sets=x.sets.filter(z=>z.done).map(z=>`${z.weight||'بدون وزنه'} × ${z.reps||'—'} (RIR ${z.rir})`).join(' | ');return `<div class="history-ex"><strong>${e?.fa||x.exerciseId}</strong>${toFa(sets||'ثبت نشده')}</div>`}).join('')}${s.pain?`<div><strong>درد:</strong> ${s.pain}</div>`:''}${s.note?`<div><strong>یادداشت:</strong> ${s.note}</div>`:''}<div class="history-actions"><button class="btn small secondary" onclick="repeatSession('${s.id}')">تکرار جلسه</button><button class="btn small danger" onclick="deleteSession('${s.id}')">حذف</button></div></div></div>`}).join('')}
+function repeatSession(sid){const s=data.sessions.find(x=>x.id===sid);document.getElementById('logWorkout').value=s.workoutId;setDateField('log',todayISO());goView('log');buildSession(true)}
+function deleteSession(sid){if(confirm('این جلسه حذف شود؟')){data.sessions=data.sessions.filter(s=>s.id!==sid);saveData();toast('جلسه حذف شد')}}
+
+function saveMeasurement(){const date=document.getElementById('measureDate').value||todayISO(),weight=document.getElementById('mWeight').value;if(!weight&&!document.getElementById('mWaist').value){toast('حداقل وزن یا دور کمر را وارد کن');return}data.measurements.push({id:id(),date,weight:weight?Number(weight):'',waist:val('mWaist'),chest:val('mChest'),arm:val('mArm'),thigh:val('mThigh'),hip:val('mHip'),note:document.getElementById('mNote').value});saveData();['mWeight','mWaist','mChest','mArm','mThigh','mHip','mNote'].forEach(x=>document.getElementById(x).value='');toast('اندازه‌ها ثبت شد')}
+function val(x){const v=document.getElementById(x).value;return v?Number(v):''}
+function renderMeasurements(){const ms=[...data.measurements].sort((a,b)=>b.date.localeCompare(a.date));document.getElementById('measureCount').textContent=toFa(ms.length)+' مورد';document.getElementById('measureList').innerHTML=ms.length?ms.slice(0,10).map(m=>`<div class="progress-entry"><div><strong>${toFa(m.weight||'—')} کیلو</strong><div>${shortPersian(m.date)}</div><div style="color:var(--muted)">${m.waist?'کمر '+toFa(m.waist):''} ${m.arm?'· بازو '+toFa(m.arm):''} ${m.thigh?'· ران '+toFa(m.thigh):''}</div></div>${m.id!=='baseline'?`<button class="btn small danger" onclick="deleteMeasure('${m.id}')">حذف</button>`:''}</div>`).join(''):'<div class="empty">اندازه‌ای ثبت نشده است.</div>';drawChart(ms.filter(x=>x.weight).sort((a,b)=>a.date.localeCompare(b.date)))}
+function deleteMeasure(mid){if(confirm('این اندازه‌گیری حذف شود؟')){data.measurements=data.measurements.filter(m=>m.id!==mid);saveData()}}
+function drawChart(ms){const c=document.getElementById('weightChart'),ctx=c.getContext('2d'),rect=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1;c.width=rect.width*dpr;c.height=rect.height*dpr;ctx.scale(dpr,dpr);const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--line');ctx.lineWidth=1;for(let i=0;i<5;i++){const y=20+i*(H-45)/4;ctx.beginPath();ctx.moveTo(30,y);ctx.lineTo(W-10,y);ctx.stroke()}if(ms.length<2){ctx.fillStyle='#64748b';ctx.textAlign='center';ctx.font='12px sans-serif';ctx.fillText('برای نمایش روند، حداقل دو وزن ثبت کن',W/2,H/2);return}const vals=ms.map(x=>Number(x.weight)),min=Math.min(...vals)-.5,max=Math.max(...vals)+.5,x=i=>30+i*(W-50)/(ms.length-1),y=v=>20+(max-v)*(H-45)/(max-min||1);ctx.strokeStyle='#14b8a6';ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));ctx.stroke();vals.forEach((v,i)=>{ctx.fillStyle='#0f766e';ctx.beginPath();ctx.arc(x(i),y(v),4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#64748b';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(toFa(v),x(i),y(v)-8)})}
+
+function reportText(){const sessions=[...data.sessions].sort((a,b)=>a.date.localeCompare(b.date)),ms=[...data.measurements].sort((a,b)=>a.date.localeCompare(b.date));let t=`گزارش تمرین مهدی\nتاریخ خروجی: ${persianDate(todayISO())}\nپروفایل: ۴۰ سال، قد ۱۷۷، وزن شروع ۶۳.۵ کیلو، هدف سه‌ماهه ۶۶ تا ۶۷.۵ کیلو\n\nخلاصه:\n- تعداد جلسات ثبت‌شده: ${sessions.length}\n- پایبندی ۱۴ روز اخیر: ${calcAdherence()}٪\n`;if(ms.length){const first=ms.find(x=>x.weight),last=[...ms].reverse().find(x=>x.weight);t+=`- وزن اول ثبت‌شده: ${first?.weight||'—'}\n- آخرین وزن: ${last?.weight||'—'}\n`;if(last?.waist)t+=`- آخرین دور کمر: ${last.waist} سانت\n`}t+='\nجلسه‌ها:\n';sessions.forEach(s=>{const w=workoutById(s.workoutId);t+=`\n${persianDate(s.date)} | ${w?.title||s.workoutId} | انرژی ${s.energy||'—'}/5 | تکمیل ${s.completedSets||0}/${s.totalSets||0}\n`;s.exercises.forEach(x=>{const e=exerciseById(x.exerciseId);const done=x.sets.filter(z=>z.done).map(z=>`${z.weight||'BW'}kg × ${z.reps||'—'} @RIR${z.rir}`).join(' ؛ ');t+=`  - ${e?.fa||x.exerciseId} (${e?.en||''}): ${done||'ثبت نشده'}\n`});if(s.pain)t+=`  درد/ناراحتی: ${s.pain}\n`;if(s.note)t+=`  یادداشت: ${s.note}\n`});t+='\nاندازه‌های بدن:\n';ms.forEach(m=>{t+=`${persianDate(m.date)} | وزن ${m.weight||'—'} | کمر ${m.waist||'—'} | سینه ${m.chest||'—'} | بازو ${m.arm||'—'} | ران ${m.thigh||'—'} | باسن ${m.hip||'—'}${m.note?' | '+m.note:''}\n`});t+='\nدرخواست بررسی: روند افزایش وزنه، تعداد تکرار، RIR، دردها، پایبندی و تغییر وزن/دور کمر را بررسی کن و در صورت نیاز برنامه را اصلاح کن.';return t}
+function download(name,content,type){const b=new Blob([content],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function exportCSV(){let rows=[['date','persian_date','workout','exercise_fa','exercise_en','set','weight_kg','reps_or_seconds','rir','done','energy','pain','note']];data.sessions.forEach(s=>{const w=workoutById(s.workoutId);s.exercises.forEach(x=>{const e=exerciseById(x.exerciseId);x.sets.forEach(st=>rows.push([s.date,persianDate(s.date),w?.title,e?.fa,e?.en,st.set,st.weight,st.reps,st.rir,st.done,s.energy,s.pain,s.note]))})});const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');download('mehdi-workout-log.csv',csv,'text/csv;charset=utf-8')}
+function exportJSON(){download('mehdi-fitness-backup.json',JSON.stringify({exportedAt:new Date().toISOString(),...data},null,2),'application/json')}
+
+let calendarTarget='log',calY,calM,selectedISO=todayISO();
+function div(a,b){return ~~(a/b)}function mod(a,b){return a-~~(a/b)*b}
+function jalCal(jy,withoutLeap){const breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178],bl=breaks.length,gy=jy+621;let leapJ=-14,jp=breaks[0],jm,jump,leap,n,i;if(jy<jp||jy>=breaks[bl-1])throw Error('Invalid Jalaali year');for(i=1;i<bl;i++){jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ=leapJ+div(jump,33)*8+div(mod(jump,33),4);jp=jm}n=jy-jp;leapJ=leapJ+div(n,33)*8+div(mod(n,33)+3,4);if(mod(jump,33)===4&&jump-n===4)leapJ+=1;const leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150,march=20+leapJ-leapG;if(withoutLeap)return{gy,march};if(jump-n<6)n=n-jump+div(jump+4,33)*33;leap=mod(mod(n+1,33)-1,4);if(leap===-1)leap=4;return{leap,gy,march}}
+function g2d(gy,gm,gd){let d=div((gy+div(gm-8,6)+100100)*1461,4)+div(153*mod(gm+9,12)+2,5)+gd-34840408;d=d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752;return d}
+function d2g(jdn){let j=4*jdn+139361631;j=j+div(div(4*jdn+183187720,146097)*3,4)*4-3908;const i=div(mod(j,1461),4)*5+308,gd=div(mod(i,153),5)+1,gm=mod(div(i,153),12)+1,gy=div(j,1461)-100100+div(8-gm,6);return{gy,gm,gd}}
+function j2d(jy,jm,jd){const r=jalCal(jy,true);return g2d(r.gy,3,r.march)+(jm-1)*31-div(jm,7)*(jm-7)+jd-1}
+function d2j(jdn){const g=d2g(jdn),jy=g.gy-621,r=jalCal(jy,false),jdn1f=g2d(g.gy,3,r.march);let k=jdn-jdn1f,jy2=jy,jm,jd;if(k>=0){if(k<=185){jm=1+div(k,31);jd=mod(k,31)+1;return{jy:jy2,jm,jd}}k-=186}else{jy2-=1;k+=179;if(r.leap===1)k+=1}jm=7+div(k,30);jd=mod(k,30)+1;return{jy:jy2,jm,jd}}
+function toJalaali(gy,gm,gd){return d2j(g2d(gy,gm,gd))}function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}
+function jMonthLen(y,m){if(m<=6)return 31;if(m<=11)return 30;return jalCal(y,false).leap===0?30:29}
+function openCalendar(target){calendarTarget=target;selectedISO=document.getElementById(target+'Date').value||todayISO();const d=new Date(selectedISO+'T12:00:00'),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());calY=j.jy;calM=j.jm;renderCalendar();document.getElementById('calendarModal').classList.add('open')}
+function renderCalendar(){const names=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];document.getElementById('calTitle').textContent=names[calM-1]+' '+toFa(calY);const first=toGregorian(calY,calM,1),firstDate=new Date(first.gy,first.gm-1,first.gd),offset=(firstDate.getDay()+1)%7,len=jMonthLen(calY,calM),sel=new Date(selectedISO+'T12:00:00'),sj=toJalaali(sel.getFullYear(),sel.getMonth()+1,sel.getDate()),today=todayISO();let h='';for(let i=0;i<offset;i++)h+='<button class="cal-day blank"></button>';for(let d=1;d<=len;d++){const g=toGregorian(calY,calM,d),iso=`${g.gy}-${String(g.gm).padStart(2,'0')}-${String(g.gd).padStart(2,'0')}`,cl=['cal-day'];if(iso===today)cl.push('today');if(sj.jy===calY&&sj.jm===calM&&sj.jd===d)cl.push('selected');h+=`<button class="${cl.join(' ')}" onclick="pickDate('${iso}')">${toFa(d)}</button>`}document.getElementById('calGrid').innerHTML=h}
+function pickDate(iso){setDateField(calendarTarget,iso);document.getElementById('calendarModal').classList.remove('open')}
+function setDateField(target,iso){document.getElementById(target+'Date').value=iso;document.getElementById(target+'DateBtn').textContent=persianDate(iso)}
+function changeMonth(n){calM+=n;if(calM>12){calM=1;calY++}if(calM<1){calM=12;calY--}renderCalendar()}
+
+function goView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));window.scrollTo({top:0,behavior:'smooth'});if(name==='progress')setTimeout(()=>renderMeasurements(),50)}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function refreshAll(){renderHome();renderHistory();renderMeasurements()}
+
+// events
+document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>goView(b.dataset.view)));
+document.getElementById('modalClose').onclick=()=>document.getElementById('exerciseModal').classList.remove('open');
+document.getElementById('exerciseModal').addEventListener('click',e=>{if(e.target.id==='exerciseModal')e.currentTarget.classList.remove('open')});
+document.getElementById('logDateBtn').onclick=()=>openCalendar('log');document.getElementById('measureDateBtn').onclick=()=>openCalendar('measure');document.getElementById('calClose').onclick=()=>document.getElementById('calendarModal').classList.remove('open');document.getElementById('calPrev').onclick=()=>changeMonth(-1);document.getElementById('calNext').onclick=()=>changeMonth(1);
+document.getElementById('buildSession').onclick=()=>buildSession(false);document.getElementById('copyLast').onclick=()=>buildSession(true);document.getElementById('saveMeasure').onclick=saveMeasurement;
+document.getElementById('exportReport').onclick=()=>download('گزارش-تمرین-مهدی.txt','\uFEFF'+reportText(),'text/plain;charset=utf-8');document.getElementById('copyReport').onclick=async()=>{try{await navigator.clipboard.writeText(reportText());toast('گزارش کپی شد')}catch(e){toast('کپی خودکار ممکن نبود؛ فایل متنی بگیر')}};document.getElementById('exportCsv').onclick=exportCSV;document.getElementById('exportJson').onclick=exportJSON;
+document.getElementById('importJson').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.sessions)||!Array.isArray(x.measurements))throw Error();data={...defaultData,...x};saveData();toast('پشتیبان بازیابی شد')}catch(err){alert('فایل پشتیبان معتبر نیست')}};r.readAsText(f)};
+document.getElementById('clearData').onclick=()=>{if(confirm('همه اطلاعات تمرین و اندازه‌ها حذف شود؟ این کار قابل بازگشت نیست.')){data=structuredClone(defaultData);saveData();toast('اطلاعات پاک شد')}};
+window.addEventListener('resize',()=>{if(document.getElementById('view-progress').classList.contains('active'))renderMeasurements()});
+
+// init
+const now=todayISO();document.getElementById('todayPersian').textContent=persianDate(now);document.getElementById('todayWeekday').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long'}).format(new Date());populateWorkoutSelect();renderPlan();setDateField('log',now);setDateField('measure',now);renderSessionForm();refreshAll();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

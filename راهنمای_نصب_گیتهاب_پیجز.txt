@@ -1,0 +1,22 @@
+نصب برنامه تمرینی مهدی با همان روش اپ مالی
+
+۱) در GitHub یک Repository عمومی با نام mehdi-fitness-app بسازید.
+۲) گزینه Add file سپس Upload files را بزنید.
+۳) همه فایل‌های داخل این پوشه را مستقیم در ریشه Repository بارگذاری کنید؛ خود پوشه بیرونی را بارگذاری نکنید.
+۴) Commit changes را بزنید.
+۵) Settings > Pages
+۶) Source: Deploy from a branch
+۷) Branch: main و Folder: /(root)
+۸) Save
+۹) پس از آماده‌شدن، آدرس برنامه:
+https://mahdineko-collab.github.io/mehdi-fitness-app/
+
+نصب روی آیفون:
+- آدرس بالا را فقط در Safari باز کنید.
+- Share را بزنید.
+- Add to Home Screen / افزودن به صفحه اصلی را انتخاب کنید.
+- برنامه را یک بار با اینترنت باز کنید تا فایل‌های آفلاین ذخیره شوند.
+- سپس در حالت Airplane Mode نیز قابل استفاده است.
+
+نکته مهم:
+اطلاعات تمرین روی همان آیفون و همان برنامه ذخیره می‌شود. از بخش خروجی، مرتب پشتیبان JSON بگیرید.
