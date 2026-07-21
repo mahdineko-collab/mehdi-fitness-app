@@ -1,5 +1,5 @@
-const CACHE='mehdi-fitness-v2';
-const ASSETS=['./','./index.html','./manifest.json','./assets/icon-192.png','./assets/icon-512.png','./assets/apple-touch-icon.png'];
+const CACHE='mehdi-fitness-v3';
+const ASSETS=["./", "./index.html", "./manifest.json", "./assets/icon-192.png", "./assets/icon-512.png", "./assets/apple-touch-icon.png", "./assets/guide-presses.png", "./assets/guide-pull.png", "./assets/guide-legs.png", "./assets/guide-hinge.png", "./assets/guide-shoulders.png", "./assets/guide-arms.png", "./assets/guide-assist.png", "./assets/guide-core1.png", "./assets/guide-core2.png"];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
