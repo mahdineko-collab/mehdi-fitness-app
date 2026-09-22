@@ -14,44 +14,46 @@ function loadData(){try{return {...structuredClone(defaultData),...JSON.parse(lo
 function saveData(){localStorage.setItem(STORAGE,JSON.stringify(data));refreshAll()}
 
 const workouts=[
- {id:'A',day:'شنبه',title:'باشگاه A — بالاسینه و چهارسر',icon:'🏋️',kind:'باشگاه',exercises:[
-  {id:'incline-db',fa:'پرس بالاسینه دمبل',en:'Incline Dumbbell Press',sets:4,reps:'6–10',target:'بالاسینه، جلوی سرشانه، پشت‌بازو',visual:'inclinePress',cues:'زاویه نیمکت ۲۰ تا ۳۰ درجه؛ آرنج‌ها بیش‌ازحد باز نشوند.'},
-  {id:'chest-row',fa:'قایقی سینه‌تکیه',en:'Chest-Supported Row',sets:3,reps:'8–12',target:'پشت میانی، لت، پشت سرشانه',visual:'row',cues:'سینه روی پد ثابت؛ در انتها کتف‌ها را یک ثانیه جمع کن.'},
-  {id:'leg-press',fa:'پرس پا',en:'Leg Press',sets:3,reps:'8–12',target:'چهارسر، باسن',visual:'legPress',cues:'زانو در مسیر پنجه؛ لگن از پشتی جدا نشود.'},
-  {id:'rdl',fa:'ددلیفت رومانیایی',en:'Romanian Deadlift',sets:3,reps:'8–10',target:'پشت ران، باسن، فیله',visual:'hinge',cues:'لگن عقب، کمر خنثی و کشش واضح پشت ران.'},
-  {id:'db-lateral',fa:'نشر جانب دمبل',en:'Dumbbell Lateral Raise',sets:3,reps:'12–20',target:'سرشانه کناری',visual:'lateral',cues:'دست‌ها کمی جلوتر؛ بدون تاب‌دادن کمر.'},
-  {id:'rope-pushdown',fa:'پشت‌بازو سیم‌کش طناب',en:'Rope Triceps Pushdown',sets:3,reps:'10–15',target:'پشت‌بازو',visual:'pushdown',cues:'آرنج ثابت کنار بدن؛ پایین حرکت طناب را باز کن.'},
-  {id:'standing-calf',fa:'ساق ایستاده',en:'Standing Calf Raise',sets:3,reps:'12–20',target:'ساق',visual:'calf',cues:'پایین کشش کامل و بالا یک ثانیه مکث.'}
+ {id:'A',day:'شنبه',title:'باشگاه A — اولویت سینه + سرشانه',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'incline-db',fa:'پرس بالاسینه دمبل',en:'Incline Dumbbell Press',sets:4,reps:'8–12',target:'بالاسینه، جلوی سرشانه، پشت‌بازو',visual:'inclinePress',cues:'زاویه نیمکت ۲۰ تا ۳۰ درجه؛ پایین حرکت کشش کنترل‌شده و ۱ تا ۲ تکرار در ذخیره.'},
+  {id:'machine-chest',fa:'پرس سینه دستگاه',en:'Machine Chest Press',sets:3,reps:'10–15',target:'سینه میانی، پشت‌بازو',visual:'machineChest',cues:'کتف‌ها عقب و پایین؛ دسته‌ها را بدون قفل محکم آرنج جلو ببر.'},
+  {id:'cable-fly-a',fa:'فلای کابل',en:'Cable Fly',sets:3,reps:'12–18',target:'سینه و جمع‌شدن فیبرها',visual:'cableFly',cues:'آرنج کمی خم و ثابت؛ در جلو سینه یک ثانیه جمع کن.'},
+  {id:'db-lateral-a',fa:'نشر جانب دمبل',en:'Dumbbell Lateral Raise',sets:4,reps:'15–20',target:'سرشانه کناری',visual:'lateral',cues:'وزنه متوسط؛ تا حوالی ارتفاع شانه بالا بیاور و تاب نده.'},
+  {id:'leg-press',fa:'پرس پا',en:'Leg Press',sets:3,reps:'10–15',target:'چهارسر و باسن',visual:'legPress',cues:'دامنه کنترل‌شده؛ زانو در مسیر پنجه و لگن چسبیده به پشتی.'},
+  {id:'leg-curl-a',fa:'پشت پا دستگاه',en:'Leg Curl',sets:3,reps:'12–15',target:'پشت ران',visual:'legCurl',cues:'بالای حرکت یک ثانیه فشار؛ برگشت را آهسته انجام بده.'},
+  {id:'rope-pushdown',fa:'پشت‌بازو طناب',en:'Rope Triceps Pushdown',sets:2,reps:'12–15',target:'پشت‌بازو',visual:'pushdown',cues:'آرنج ثابت کنار بدن؛ آخر حرکت طناب را کمی باز کن.'},
+  {id:'chest-row-a',fa:'قایقی سینه‌تکیه',en:'Chest-Supported Row',sets:2,reps:'10–15',target:'پشت میانی و تعادل شانه',visual:'row',cues:'بدون تاب بدن؛ در انتها کتف‌ها را جمع کن.'}
  ]},
- {id:'H1',day:'یکشنبه',title:'خانه — شکم و کنترل لگن',icon:'🧘',kind:'خانه',exercises:[
-  {id:'dead-bug',fa:'ددباگ',en:'Dead Bug',sets:3,reps:'8–12 هر سمت',target:'عضلات عمقی شکم',visual:'deadBug',cues:'کمر را روی زمین نگه دار؛ حرکت آهسته و کنترل‌شده.'},
-  {id:'reverse-crunch',fa:'ریورس کرانچ',en:'Reverse Crunch',sets:3,reps:'10–15',target:'شکم، کنترل لگن',visual:'reverseCrunch',cues:'لگن را از زمین جمع کن؛ فقط پاها را تاب نده.'},
-  {id:'side-plank',fa:'ساید پلانک',en:'Side Plank',sets:2,reps:'25–40 ثانیه هر سمت',target:'پهلو و ثبات مرکزی',visual:'sidePlank',cues:'بدن خط صاف؛ لگن افت نکند.'},
-  {id:'glute-bridge',fa:'پل باسن',en:'Glute Bridge',sets:2,reps:'15',target:'باسن و لگن',visual:'bridge',cues:'بالا باسن را سفت کن؛ کمر را گود نکن.'}
+ {id:'B',day:'دوشنبه',title:'باشگاه B — اولویت سرشانه + پشت',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'db-shoulder',fa:'پرس سرشانه دمبل نشسته',en:'Seated Dumbbell Shoulder Press',sets:3,reps:'8–12',target:'سرشانه و پشت‌بازو',visual:'shoulderPress',cues:'وزنه متوسط؛ کمر روی پشتی بماند و آرنج‌ها کمی جلوتر از بدن.'},
+  {id:'cable-lateral-b',fa:'نشر جانب سیم‌کش',en:'Cable Lateral Raise',sets:4,reps:'12–20',target:'سرشانه کناری',visual:'cableLateral',cues:'حرکت آرام و بدون شتاب؛ شانه را بالا نینداز.'},
+  {id:'reverse-pec-b',fa:'فلای معکوس دستگاه',en:'Reverse Pec Deck',sets:3,reps:'15–20',target:'پشت سرشانه',visual:'reverseFly',cues:'شانه‌ها پایین؛ حرکت را از پشت سرشانه انجام بده.'},
+  {id:'lat-pulldown',fa:'لت سیم‌کش از جلو',en:'Lat Pulldown',sets:3,reps:'10–15',target:'لت و عرض پشت',visual:'pulldown',cues:'میله به بالای سینه؛ بدن را زیاد عقب نبر.'},
+  {id:'cable-row-b',fa:'قایقی سیم‌کش نشسته',en:'Seated Cable Row',sets:3,reps:'10–15',target:'پشت میانی و لت',visual:'cableRow',cues:'قفسه سینه بالا؛ دستگیره به پایین شکم.'},
+  {id:'bulgarian',fa:'اسکوات بلغاری',en:'Bulgarian Split Squat',sets:3,reps:'10–12 هر پا',target:'ران و باسن',visual:'splitSquat',cues:'وزن روی پای جلو؛ دامنه‌ای برو که زانو و لگن راحت باشند.'},
+  {id:'rdl-b',fa:'ددلیفت رومانیایی',en:'Romanian Deadlift',sets:3,reps:'10–12',target:'پشت ران و باسن',visual:'hinge',cues:'وزنه متوسط؛ لگن عقب و ستون فقرات خنثی.'},
+  {id:'hammer-curl-b',fa:'جلو بازو چکشی',en:'Hammer Curl',sets:2,reps:'12–15',target:'جلو بازو، براکیالیس و ساعد',visual:'hammerCurl',cues:'آرنج کنار بدن؛ بدون تاب دادن تنه.'}
  ]},
- {id:'B',day:'دوشنبه',title:'باشگاه B — پشت، سرشانه و باسن',icon:'🏋️',kind:'باشگاه',exercises:[
-  {id:'lat-pulldown',fa:'لت سیم‌کش از جلو',en:'Lat Pulldown',sets:4,reps:'8–12',target:'لت و عرض پشت',visual:'pulldown',cues:'میله به بالای سینه؛ شانه‌ها پایین و بدن تقریباً ثابت.'},
-  {id:'db-shoulder',fa:'پرس سرشانه دمبل نشسته',en:'Seated Dumbbell Shoulder Press',sets:3,reps:'8–10',target:'سرشانه و پشت‌بازو',visual:'shoulderPress',cues:'کمر روی پشتی؛ آرنج کمی جلوتر از خط بدن.'},
-  {id:'bulgarian',fa:'اسکوات بلغاری',en:'Bulgarian Split Squat',sets:3,reps:'8–12 هر پا',target:'ران، باسن و تعادل',visual:'splitSquat',cues:'وزن روی پای جلو؛ زانو در مسیر پنجه.'},
-  {id:'hip-thrust',fa:'هیپ تراست',en:'Hip Thrust',sets:3,reps:'8–12',target:'باسن و پشت ران',visual:'hipThrust',cues:'چانه کمی داخل؛ بالای حرکت لگن کامل باز شود.'},
-  {id:'reverse-pec',fa:'فلای معکوس دستگاه',en:'Reverse Pec Deck',sets:3,reps:'12–20',target:'پشت سرشانه و پشت میانی',visual:'reverseFly',cues:'شانه‌ها پایین؛ حرکت از بازشدن بازوها و کتف‌ها.'},
-  {id:'ez-curl',fa:'جلو بازو هالتر EZ',en:'EZ-Bar Curl',sets:3,reps:'8–12',target:'جلو بازو',visual:'curl',cues:'آرنج ثابت؛ بدن تاب نخورد.'},
-  {id:'seated-calf',fa:'ساق نشسته',en:'Seated Calf Raise',sets:3,reps:'12–20',target:'ساق',visual:'calf',cues:'دامنه کامل و کنترل برگشت.'}
+ {id:'C',day:'پنجشنبه',title:'باشگاه C — سینه و سرشانه پمپ + تکمیل بدن',icon:'🏋️',kind:'باشگاه',exercises:[
+  {id:'flat-db-c',fa:'پرس سینه دمبل تخت',en:'Flat Dumbbell Press',sets:4,reps:'8–12',target:'سینه، پشت‌بازو و جلوی سرشانه',visual:'flatPress',cues:'کتف‌ها عقب و پایین؛ پایین حرکت ۲ ثانیه کنترل کن.'},
+  {id:'incline-db-c',fa:'پرس بالاسینه دمبل',en:'Incline Dumbbell Press',sets:3,reps:'10–15',target:'بالاسینه',visual:'inclinePress',cues:'در این روز کمی سبک‌تر از روز A بزن و روی کشش و جمع‌شدن سینه تمرکز کن.'},
+  {id:'cable-fly-c',fa:'فلای کابل',en:'Cable Fly',sets:3,reps:'15–20',target:'سینه',visual:'cableFly',cues:'در جلو سینه مکث کوتاه؛ وزنه‌ای بگیر که فرم کاملاً تمیز بماند.'},
+  {id:'cable-lateral-c',fa:'نشر جانب سیم‌کش',en:'Cable Lateral Raise',sets:4,reps:'15–20',target:'سرشانه کناری',visual:'cableLateral',cues:'تمرکز روی سوزش سرشانه؛ وزنه سنگین لازم نیست.'},
+  {id:'reverse-pec-c',fa:'فلای معکوس دستگاه',en:'Reverse Pec Deck',sets:2,reps:'15–20',target:'پشت سرشانه',visual:'reverseFly',cues:'کنترل کامل؛ گردن را شل نگه دار.'},
+  {id:'hack-squat-c',fa:'هک اسکوات',en:'Hack Squat',sets:3,reps:'10–15',target:'چهارسر و باسن',visual:'squat',cues:'دامنه راحت و کنترل‌شده؛ فشار مفصلی نباید تیز یا آزاردهنده باشد.'},
+  {id:'overhead-tri-c',fa:'پشت‌بازو طناب بالای سر',en:'Overhead Rope Triceps Extension',sets:3,reps:'12–15',target:'سر بلند پشت‌بازو',visual:'overheadTri',cues:'آرنج‌ها ثابت؛ کشش کامل بدون درد شانه یا آرنج.'},
+  {id:'ez-curl-c',fa:'جلو بازو هالتر EZ',en:'EZ-Bar Curl',sets:3,reps:'10–15',target:'جلو بازو',visual:'curl',cues:'بدون تاب دادن بدن؛ بالا یک لحظه مکث.'},
+  {id:'standing-calf-c',fa:'ساق ایستاده',en:'Standing Calf Raise',sets:3,reps:'12–20',target:'ساق',visual:'calf',cues:'دامنه کامل؛ پایین کشش و بالا مکث.'}
  ]},
- {id:'H2',day:'چهارشنبه',title:'خانه — شنا و شکم',icon:'🤸',kind:'خانه',exercises:[
-  {id:'push-up',fa:'شنا روی زمین',en:'Push-up',sets:3,reps:'8–20',target:'سینه، پشت‌بازو و سرشانه',visual:'pushup',cues:'بدن یک خط؛ دو تکرار قبل از خراب‌شدن فرم توقف کن.'},
-  {id:'scap-pushup',fa:'شنا کتف',en:'Scapular Push-up',sets:2,reps:'12–15',target:'ثبات کتف و شانه',visual:'scapPushup',cues:'آرنج صاف؛ فقط کتف‌ها جمع و باز شوند.'},
-  {id:'reverse-crunch2',fa:'ریورس کرانچ',en:'Reverse Crunch',sets:3,reps:'12–15',target:'شکم و لگن',visual:'reverseCrunch',cues:'حرکت آهسته و بدون تاب.'},
-  {id:'plank',fa:'پلانک',en:'Plank',sets:3,reps:'25–45 ثانیه',target:'شکم و ثبات مرکزی',visual:'plank',cues:'باسن نه بالا نه افتاده؛ شکم و باسن منقبض.'}
+ {id:'COREA',day:'خانه A',title:'خانه — شکم عضله‌سازی (حدود ۱۰ دقیقه)',icon:'🧘',kind:'خانه',exercises:[
+  {id:'weighted-crunch',fa:'کرانچ وزنه‌دار',en:'Weighted Crunch',sets:3,reps:'12–20',target:'راست شکمی',visual:'reverseCrunch',cues:'دمبل ۵ کیلویی یا صفحه سبک روی سینه؛ ستون فقرات را جمع کن، نه اینکه فقط گردن را جلو ببری.'},
+  {id:'reverse-crunch-core',fa:'ریورس کرانچ',en:'Reverse Crunch',sets:3,reps:'12–15',target:'شکم و کنترل لگن',visual:'reverseCrunch',cues:'لگن را از زمین جمع کن؛ حرکت را با تاب پاها انجام نده.'},
+  {id:'plank-core',fa:'پلانک',en:'Plank',sets:2,reps:'35–50 ثانیه',target:'ثبات مرکزی',visual:'plank',cues:'شکم و باسن منقبض؛ نفس را حبس نکن.'}
  ]},
- {id:'C',day:'پنجشنبه',title:'باشگاه C — بدن کامل و تکمیل نقاط ضعف',icon:'🏋️',kind:'باشگاه',exercises:[
-  {id:'flat-db',fa:'پرس سینه دمبل تخت',en:'Flat Dumbbell Press',sets:3,reps:'8–12',target:'سینه، پشت‌بازو و سرشانه',visual:'flatPress',cues:'کتف‌ها عقب و پایین؛ دمبل‌ها با کنترل پایین بیایند.'},
-  {id:'cable-row',fa:'قایقی سیم‌کش نشسته',en:'Seated Cable Row',sets:3,reps:'8–12',target:'پشت میانی و لت',visual:'cableRow',cues:'دستگیره به پایین شکم؛ قفسه سینه بالا.'},
-  {id:'hack-squat',fa:'هک اسکوات',en:'Hack Squat',sets:3,reps:'8–12',target:'چهارسر و باسن',visual:'squat',cues:'کف پا کامل روی صفحه؛ زانو در مسیر پنجه.'},
-  {id:'leg-curl',fa:'پشت پا دستگاه',en:'Leg Curl',sets:3,reps:'10–15',target:'پشت ران',visual:'legCurl',cues:'بالا یک ثانیه فشار؛ برگشت آرام.'},
-  {id:'cable-lateral',fa:'نشر جانب سیم‌کش',en:'Cable Lateral Raise',sets:3,reps:'12–20',target:'سرشانه کناری',visual:'lateral',cues:'کیفیت حرکت مهم‌تر از سنگینی است.'},
-  {id:'overhead-tri',fa:'پشت‌بازو طناب بالای سر',en:'Overhead Rope Triceps Extension',sets:3,reps:'10–15',target:'سر بلند پشت‌بازو',visual:'overheadTri',cues:'آرنج‌ها رو به جلو و ثابت؛ کشش کامل پشت‌بازو.'},
-  {id:'hammer-curl',fa:'جلو بازو چکشی',en:'Hammer Curl',sets:3,reps:'10–15',target:'جلو بازو، براکیالیس و ساعد',visual:'hammerCurl',cues:'کف دست‌ها روبه‌هم؛ شانه جلو نیاید.'}
+ {id:'COREB',day:'خانه B',title:'خانه — شکم و پهلو (حدود ۱۰ دقیقه)',icon:'🧘',kind:'خانه',exercises:[
+  {id:'dead-bug-core',fa:'ددباگ',en:'Dead Bug',sets:3,reps:'10 هر سمت',target:'عضلات عمقی شکم',visual:'deadBug',cues:'کمر را روی زمین نگه دار و هر تکرار را آهسته انجام بده.'},
+  {id:'side-plank-core',fa:'ساید پلانک',en:'Side Plank',sets:2,reps:'30–45 ثانیه هر سمت',target:'پهلو و ثبات لگن',visual:'sidePlank',cues:'لگن افت نکند و بدن نچرخد.'},
+  {id:'push-up-core',fa:'شنا روی زمین',en:'Push-up',sets:2,reps:'10–20',target:'سینه، پشت‌بازو و ثبات مرکزی',visual:'pushup',cues:'در حدی بزن که ریکاوری سینه برای باشگاه خراب نشود؛ ۲ تا ۳ تکرار در ذخیره بماند.'}
  ]}
 ];
 const workoutById=x=>workouts.find(w=>w.id===x);
@@ -59,6 +61,9 @@ const exerciseById=x=>workouts.flatMap(w=>w.exercises).find(e=>e.id===x);
 
 
 const PHOTO_MAP={
+  machineChest:{src:'assets/guide-cable-chest.png',row:0},
+  cableFly:{src:'assets/guide-cable-chest.png',row:1},
+  cableLateral:{src:'assets/guide-cable-chest.png',row:2},
   inclinePress:{src:'assets/guide-presses.png',row:0},
   flatPress:{src:'assets/guide-presses.png',row:1},
   pushup:{src:'assets/guide-presses.png',row:2},
@@ -87,6 +92,9 @@ const PHOTO_MAP={
   scapPushup:{src:'assets/guide-core2.png',row:1}
 };
 const COMMON_MISTAKES={
+  machineChest:'بالا انداختن شانه‌ها، قفل محکم آرنج و جدا شدن کتف از پشتی.',
+  cableFly:'خم و راست کردن زیاد آرنج، جلو رفتن شانه‌ها و سنگین گرفتن وزنه.',
+  cableLateral:'تاب دادن تنه، بالا انداختن شانه و عبور زیاد دست از ارتفاع شانه.',
   inclinePress:'باز شدن بیش از حد آرنج‌ها، قوس دادن زیاد کمر و برخورد دمبل‌ها به هم.',
   flatPress:'شل شدن کتف‌ها، پایین آوردن خیلی سریع دمبل و نیمه‌کاره زدن دامنه.',
   pushup:'افتادن کمر، بالا ماندن باسن و بیرون دادن سر به جلو.',
@@ -186,7 +194,7 @@ function renderMeasurements(){const ms=[...data.measurements].sort((a,b)=>b.date
 function deleteMeasure(mid){if(confirm('این اندازه‌گیری حذف شود؟')){data.measurements=data.measurements.filter(m=>m.id!==mid);saveData()}}
 function drawChart(ms){const c=document.getElementById('weightChart'),ctx=c.getContext('2d'),rect=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1;c.width=rect.width*dpr;c.height=rect.height*dpr;ctx.scale(dpr,dpr);const W=rect.width,H=rect.height;ctx.clearRect(0,0,W,H);ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--line');ctx.lineWidth=1;for(let i=0;i<5;i++){const y=20+i*(H-45)/4;ctx.beginPath();ctx.moveTo(30,y);ctx.lineTo(W-10,y);ctx.stroke()}if(ms.length<2){ctx.fillStyle='#64748b';ctx.textAlign='center';ctx.font='12px sans-serif';ctx.fillText('برای نمایش روند، حداقل دو وزن ثبت کن',W/2,H/2);return}const vals=ms.map(x=>Number(x.weight)),min=Math.min(...vals)-.5,max=Math.max(...vals)+.5,x=i=>30+i*(W-50)/(ms.length-1),y=v=>20+(max-v)*(H-45)/(max-min||1);ctx.strokeStyle='#14b8a6';ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));ctx.stroke();vals.forEach((v,i)=>{ctx.fillStyle='#0f766e';ctx.beginPath();ctx.arc(x(i),y(v),4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#64748b';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(toFa(v),x(i),y(v)-8)})}
 
-function reportText(){const sessions=[...data.sessions].sort((a,b)=>a.date.localeCompare(b.date)),ms=[...data.measurements].sort((a,b)=>a.date.localeCompare(b.date));let t=`گزارش تمرین مهدی\nتاریخ خروجی: ${persianDate(todayISO())}\nپروفایل: ۴۰ سال، قد ۱۷۷، وزن شروع ۶۳.۵ کیلو، هدف سه‌ماهه ۶۶ تا ۶۷.۵ کیلو\n\nخلاصه:\n- تعداد جلسات ثبت‌شده: ${sessions.length}\n- پایبندی ۱۴ روز اخیر: ${calcAdherence()}٪\n`;if(ms.length){const first=ms.find(x=>x.weight),last=[...ms].reverse().find(x=>x.weight);t+=`- وزن اول ثبت‌شده: ${first?.weight||'—'}\n- آخرین وزن: ${last?.weight||'—'}\n`;if(last?.waist)t+=`- آخرین دور کمر: ${last.waist} سانت\n`}t+='\nجلسه‌ها:\n';sessions.forEach(s=>{const w=workoutById(s.workoutId);t+=`\n${persianDate(s.date)} | ${w?.title||s.workoutId} | انرژی ${s.energy||'—'}/5 | تکمیل ${s.completedSets||0}/${s.totalSets||0}\n`;s.exercises.forEach(x=>{const e=exerciseById(x.exerciseId);const done=x.sets.filter(z=>z.done).map(z=>`${z.weight||'BW'}kg × ${z.reps||'—'} @RIR${z.rir}`).join(' ؛ ');t+=`  - ${e?.fa||x.exerciseId} (${e?.en||''}): ${done||'ثبت نشده'}\n`});if(s.pain)t+=`  درد/ناراحتی: ${s.pain}\n`;if(s.note)t+=`  یادداشت: ${s.note}\n`});t+='\nاندازه‌های بدن:\n';ms.forEach(m=>{t+=`${persianDate(m.date)} | وزن ${m.weight||'—'} | کمر ${m.waist||'—'} | سینه ${m.chest||'—'} | بازو ${m.arm||'—'} | ران ${m.thigh||'—'} | باسن ${m.hip||'—'}${m.note?' | '+m.note:''}\n`});t+='\nدرخواست بررسی: روند افزایش وزنه، تعداد تکرار، RIR، دردها، پایبندی و تغییر وزن/دور کمر را بررسی کن و در صورت نیاز برنامه را اصلاح کن.';return t}
+function reportText(){const sessions=[...data.sessions].sort((a,b)=>a.date.localeCompare(b.date)),ms=[...data.measurements].sort((a,b)=>a.date.localeCompare(b.date));let t=`گزارش تمرین مهدی\nتاریخ خروجی: ${persianDate(todayISO())}\nپروفایل: ۴۰ سال، قد ۱۷۷، وزن شروع ۶۳.۵ کیلو، وزن فعلی حدود ۶۶.۵ کیلو\n\nخلاصه:\n- تعداد جلسات ثبت‌شده: ${sessions.length}\n- پایبندی ۱۴ روز اخیر: ${calcAdherence()}٪\n`;if(ms.length){const first=ms.find(x=>x.weight),last=[...ms].reverse().find(x=>x.weight);t+=`- وزن اول ثبت‌شده: ${first?.weight||'—'}\n- آخرین وزن: ${last?.weight||'—'}\n`;if(last?.waist)t+=`- آخرین دور کمر: ${last.waist} سانت\n`}t+='\nجلسه‌ها:\n';sessions.forEach(s=>{const w=workoutById(s.workoutId);t+=`\n${persianDate(s.date)} | ${w?.title||s.workoutId} | انرژی ${s.energy||'—'}/5 | تکمیل ${s.completedSets||0}/${s.totalSets||0}\n`;s.exercises.forEach(x=>{const e=exerciseById(x.exerciseId);const done=x.sets.filter(z=>z.done).map(z=>`${z.weight||'BW'}kg × ${z.reps||'—'} @RIR${z.rir}`).join(' ؛ ');t+=`  - ${e?.fa||x.exerciseId} (${e?.en||''}): ${done||'ثبت نشده'}\n`});if(s.pain)t+=`  درد/ناراحتی: ${s.pain}\n`;if(s.note)t+=`  یادداشت: ${s.note}\n`});t+='\nاندازه‌های بدن:\n';ms.forEach(m=>{t+=`${persianDate(m.date)} | وزن ${m.weight||'—'} | کمر ${m.waist||'—'} | سینه ${m.chest||'—'} | بازو ${m.arm||'—'} | ران ${m.thigh||'—'} | باسن ${m.hip||'—'}${m.note?' | '+m.note:''}\n`});t+='\nدرخواست بررسی: روند افزایش وزنه، تعداد تکرار، RIR، دردها، پایبندی و تغییر وزن/دور کمر را بررسی کن و در صورت نیاز برنامه را اصلاح کن.';return t}
 function download(name,content,type){const b=new Blob([content],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function exportCSV(){let rows=[['date','persian_date','workout','exercise_fa','exercise_en','set','weight_kg','reps_or_seconds','rir','done','energy','pain','note']];data.sessions.forEach(s=>{const w=workoutById(s.workoutId);s.exercises.forEach(x=>{const e=exerciseById(x.exerciseId);x.sets.forEach(st=>rows.push([s.date,persianDate(s.date),w?.title,e?.fa,e?.en,st.set,st.weight,st.reps,st.rir,st.done,s.energy,s.pain,s.note]))})});const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');download('mehdi-workout-log.csv',csv,'text/csv;charset=utf-8')}
 function exportJSON(){download('mehdi-fitness-backup.json',JSON.stringify({exportedAt:new Date().toISOString(),...data},null,2),'application/json')}
